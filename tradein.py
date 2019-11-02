@@ -5,7 +5,7 @@ barters = {
 	"Island Tree Coated Plywood": [{"count": 100, "input": ["[Level 2] Filtered Drinking Water", "[Level 2] Narvo Sea Cucumber", "[Level 2] Pirate Gold Coin"]}],
 	"Rock Salt Ingot": [{"count": 10, "input": ["[Level 2] Conch Shell Ornament", "[Level 2] Balanced Stone Pagoda", "[Level 2] Urchin Spine"]}],
 	"Deep Sea Memory Filled Glue": [{"count": 4, "input": ["[Level 3] Torn Pirate Treasure Map", "[Level 3] Gooey Monster Blood", "[Level 3] Rare Herb Pile", "[Level 3] Blue Candle Bundle"]}],
-	"Cox Pirates' Artifact (Parley Beginner )": [{"count": 1, "input": ["[Level 2] Opulent Marble", "[Level 2] Big Stone Slab", "[Level 2] Monster Tentacle"]}],
+	"Cox Pirates' Artifact (Parley Beginner)": [{"count": 1, "input": ["[Level 2] Opulent Marble", "[Level 2] Big Stone Slab", "[Level 2] Monster Tentacle"]}],
 	"Enhanced Island Tree Coated Plywood": [{"count": 1, "input": ["[Level 3] Torn Pirate Treasure Map", "[Level 3] Scout Binoculars", "[Level 3] Skull Symbol Carpet", "[Level 3] Ancient Orders"]},
 											{"count": 5, "input": ["[Level 4] Marine Knights' Spear", "[Level 4] Bronze Candlestick", "[Level 4] Stolen Pirate Dagger"]}],
 	"Luminous Cobalt Ingot": [{"count": 1, "input": ["[Level 4] Stolen Pirate Dagger", "[Level 4] Solidified Lava", "[Level 4] Pirate's Key"]}],
