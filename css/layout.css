@@ -18,8 +18,8 @@ section {
 
 section.main {
 	z-index: 1;
-	max-width: 90%;
-	min-width: 750px;
+	max-width: 850px;
+	min-width: 850px;
 	width: 95%;
 	position: relative;}
 

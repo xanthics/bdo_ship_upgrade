@@ -2,4 +2,6 @@ from browser.html import *
 
 
 def gen_info():
-	return "This" + BR() + "is a " + STRONG("Placeholder")
+	ret = H2("Upgrade Paths") + BR() + CANVAS(id='shipchart', width=820, height=400) + BR()
+	ret += "This" + BR() + "is a " + STRONG("Placeholder")
+	return ret
