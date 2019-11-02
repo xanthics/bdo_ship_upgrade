@@ -1,6 +1,7 @@
 # list of supported ships
 
 ships = [
+	"Information",
 	"Epheria Sailboat",
 	"Improved Epheria Sailboat",
 	"Epheria Caravel",

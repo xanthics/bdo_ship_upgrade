@@ -58,17 +58,17 @@
                     while queue:
                         current, c_count = queue.pop()
                         if current in recipes:
+
                             for i in recipes[current]:
                                 n_count = c_count * recipes[current][i]
                                 if "+" not in i:
                                     if i not in missing:
                                         missing[i] = 0
                                     missing[i] += n_count
-                                else:
-                                    if "+{} ".format(int(doc[item['id']].value)) in current:
-                                        queue = []
-                                        break
                                 queue.append((i, n_count))
+                            if any(["+{} ".format(int(doc[item['id']].value)) in x or x.startswith("Epheria") for x in recipes[current]]):
+                                queue = []
+
             t = TABLE(TR(TH("Count")+TH("Name")+TH("Notes")))
 
             for item in sorted(missing):
@@ -81,7 +81,13 @@
         # Update the stored value of an item
         def update_count(ev):
             storage[ev.currentTarget['id']] = ev.currentTarget.value
-            update_missing()
+            update(None)
+
+
+        # Code to show an about page and miscellaneous information.
+        def show_info():
+            doc['shipparts'].text = ''
+            return
 
 
         # Change what is displayed to match current selection
@@ -89,10 +95,23 @@
             if ev:
                 storage['ship'] = ev.currentTarget.value
             eventname = storage['ship']
+            if eventname == "Information":
+                show_info()
+                return
+            # add green gear items for carracks
+            recipesextra = {}
+            for part in recipes[eventname].keys():
+                id = "{}-{}".format(eventname, part)
+                if '+' in part and part in recipes and (id not in storage or storage[id] == '0'):
+                    for i in recipes[part[4:]]:
+                        if "+" in i:
+                            recipesextra[i] = 1
+                            break
+
             t = TABLE()
             t <= TR(TH("Count") + TH("Max") + TH("Name"))
             ids = []
-            for part in recipes[eventname]:
+            for part in {**recipes[eventname], **recipesextra}:
                 newid = "{}-{}".format(eventname, part)
                 ids.append(newid)
                 sel = html.SELECT(size=1, multiple=False, id=newid)
@@ -131,7 +150,8 @@
         def reset_data(ev):
             for key in storage.keys():
                 del storage[key]
-            storage['ship'] = doc['ship'].value
+            storage['ship'] = ships[0]
+            doc['ship'].value = storage['ship']
             update(None)
 
         b_reset = html.BUTTON("Reset Data")

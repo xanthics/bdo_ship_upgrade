@@ -46,3 +46,7 @@ label + input[type=checkbox] {
 
 label + input[type=checkbox]:checked {
 	opacity:1.0;}
+
+select.current {
+    width: 4em;
+}
