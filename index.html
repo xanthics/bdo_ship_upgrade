@@ -31,7 +31,7 @@
             if val in items:
                 for i in items[val]:
                     ret.append(i + BR())
-            if val in recipes:
+            if val in recipes and val not in ships:
                 for i in recipes[val]:
                     ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
             if val in barters:
@@ -51,6 +51,9 @@
                         missing[item['data-name']] = count
                     else:
                         count = 1
+                    if item['data-name'] in ships:
+                        continue
+
                     queue = [(item['data-name'], count)]
                     while queue:
                         current, c_count = queue.pop()
