@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.rawgit.com/brython-dev/brython/3.6.2/www/src/brython.js" type="text/javascript"></script>
+    <script src="https://cdn.rawgit.com/brython-dev/brython/3.6.2/www/src/brython_stdlib.js" type="text/javascript"></script>
+    <link href="css/layout.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body onload="brython(1)">
+    <section class="main">
+        <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
+        <span id="shipparts"></span>
+    </section>
+    <script type="text/python">
+        from browser import document as doc
+        from browser import html
+        from browser.html import TABLE, TR, TH, TD, BR, H3, SPAN
+        from browser.local_storage import storage
+        from resources.recipes import recipes
+        from resources.tradein import barters
+        from resources.vendor_items import items
+        from resources.ships import ships
+
+        # Given a part name, returns a string with information about that part
+        # returns empty string if no information
+        def notes(val):
+            ret = []
+            if val in items:
+                for i in items[val]:
+                    ret.append(i + BR())
+            if val in recipes:
+                for i in recipes[val]:
+                    ret.append("Recipe item: {}x {}".format(recipes[val][i], i) + BR())
+            if val in barters:
+                for b in barters[val]:
+                    for c, item in enumerate(b["input"]):
+                        ret.append("{} per {}".format(b['count'], item) + BR())
+            return ret
+
+
+        # update missing parts
+        def update_missing():
+            missing = {}
+            for item in doc.select(".current"):
+                count = int(item['data-max']) - int(doc[item['id']].value)
+                if count:
+                    if "+" not in item['data-name']:
+                        missing[item['data-name']] = count
+                    else:
+                        count = 1
+                    queue = [(item['data-name'], count)]
+                    while queue:
+                        current, c_count = queue.pop()
+                        if current in recipes:
+                            for i in recipes[current]:
+                                n_count = c_count * recipes[current][i]
+                                if "+" not in i:
+                                    if i not in missing:
+                                        missing[i] = 0
+                                    missing[i] += n_count
+                                else:
+                                    if "+{} ".format(int(doc[item['id']].value)) in current:
+                                        queue = []
+                                        break
+                                queue.append((i, n_count))
+            t = TABLE(TR(TH("Count")+TH("Name")+TH("Notes")))
+
+            for item in sorted(missing):
+                t <= TR(TD(missing[item])+TD(item)+TD(notes(item)))
+
+            doc['missing'].text = ''
+            doc['missing'] <= t
+
+
+        # Update the stored value of an item
+        def update_count(ev):
+            storage[ev.currentTarget['id']] = ev.currentTarget.value
+            update_missing()
+
+
+        # Change what is displayed to match current selection
+        def update(ev):
+            if ev:
+                storage['ship'] = ev.currentTarget.value
+            eventname = storage['ship']
+            t = TABLE()
+            t <= TR(TH("Count") + TH("Max") + TH("Name"))
+            ids = []
+            for part in recipes[eventname]:
+                newid = "{}-{}".format(eventname, part)
+                ids.append(newid)
+                sel = html.SELECT(size=1, multiple=False, id=newid)
+                val = 10 if '+' in part else recipes[eventname][part]
+                sel['data-max'] = val
+                sel['data-name'] = part
+                sel['class'] = "current"
+                sel.bind("change", update_count)
+                for i in range(val+1):
+                    sel <= html.OPTION(i)
+                t <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(part[4:]) if '+' in part else part))
+
+            doc['shipparts'].text = ''
+            doc['shipparts'] <= t
+            doc['shipparts'] <= BR() + BR() + H3("Missing parts") + SPAN(id="missing")
+
+            # iterate over selection boxes and set to values in local storage.
+            for id in ids:
+                if id in storage:
+                    doc[id].value = storage[id]
+            update_missing()
+
+
+        # Initialize our list of ships and select the previous one if a choice exists
+        def create_ship_list():
+            sel = html.SELECT(size=1, multiple=False, id="ship")
+            for ship in ships:
+                sel <= html.OPTION(ship)
+            sel.bind("change", update)
+            doc['shiplist'] <= sel
+            if 'ship' in storage and storage['ship'] in ships:
+                doc['ship'].value = storage['ship']
+                update(None)
+
+
+        create_ship_list()
+
+
+    </script>
+
+</body>
+</html>
