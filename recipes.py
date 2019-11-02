@@ -148,21 +148,21 @@ recipes = {
 	"Epheria Caravel: Upgraded Plating (Blue)": {
 		"+10 Epheria Caravel: Upgraded Plating (Green)": 1,
 		"Pure Pearl Crystal": 45,
-		"Cox Pirates’ Artifact (Parley Beginner)": 60,
-		"Cox Pirates’ Artifact (Combat)": 60,
+		"Cox Pirates' Artifact (Parley Beginner)": 60,
+		"Cox Pirates' Artifact (Combat)": 60,
 		"Moon Scale Plywood": 200
 	},
 	"Epheria Caravel: Mayna Cannon": {
 		"+10 Epheria Caravel: Verisha Cannon": 1,
 		"Tide-Dyed Standardized Timber Square": 180,
-		"Cox Pirates’ Artifact (Combat)": 60,
+		"Cox Pirates' Artifact (Combat)": 60,
 		"Moon Scale Plywood": 200,
 		"Bright Reef Piece": 180
 	},
 	"Epheria Caravel: Stratus Wind Sail": {
 		"+10 Epheria Caravel: White Wind Sail": 1,
 		"Ruddy Manganese Nodule": 40,
-		"Cox Pirates’ Artifact (Parley Expert)": 30,
+		"Cox Pirates' Artifact (Parley Expert)": 30,
 		"Seaweed Stalk": 80,
 		"Luminous Cobalt Ingot": 30
 	},
@@ -177,21 +177,21 @@ recipes = {
 	"Epheria Galleass: Upgraded Plating (Blue)": {
 		"+10 Epheria Galleass: Upgraded Plating (Green)": 1,
 		"Pure Pearl Crystal": 45,
-		"Cox Pirates’ Artifact (Parley Beginner)": 60,
-		"Cox Pirates’ Artifact (Combat)": 125,
+		"Cox Pirates' Artifact (Parley Beginner)": 60,
+		"Cox Pirates' Artifact (Combat)": 125,
 		"Moon Scale Plywood": 300
 	},
 	"Epheria Galleass: Mayna Cannon": {
 		"+10 Epheria Galleass: Verisha Cannon": 1,
 		"Tide-Dyed Standardized Timber Square": 180,
-		"Cox Pirates’ Artifact (Combat)": 125,
-		"Moon Scale Plywood": 200,
+		"Cox Pirates' Artifact (Combat)": 125,
+		"Moon Scale Plywood": 300,
 		"Bright Reef Piece": 180
 	},
 	"Epheria Galleass: Stratus Wind Sail": {
 		"+10 Epheria Galleass: White Wind Sail": 1,
 		"Ruddy Manganese Nodule": 50,
-		"Cox Pirates’ Artifact (Parley Expert)": 30,
+		"Cox Pirates' Artifact (Parley Expert)": 30,
 		"Seaweed Stalk": 125,
 		"Luminous Cobalt Ingot": 30
 	},
