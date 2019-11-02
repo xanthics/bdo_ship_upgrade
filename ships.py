@@ -8,7 +8,7 @@ ships = [
 	"Carrack (Balance)",
 	"Epheria Frigate",
 	"Improved Epheria Frigate",
-	"Epheria Gaileass",
+	"Epheria Galleass",
 	"Carrack (Volante)",
 	"Carrack (Valor)",
 ]

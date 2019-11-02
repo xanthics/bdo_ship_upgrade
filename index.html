@@ -10,9 +10,10 @@
 </head>
 <body onload="brython(1)">
     <section class="main">
-        This site uses local storage to save your choices. <br /><br />
+        This site uses local storage to save your choices. <br /><br /><br />
         <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
+        <br /><span id="reset"></span>(warning not reversible)
     </section>
     <script type="text/python">
         from browser import document as doc
@@ -127,6 +128,15 @@
             update(None)
 
 
+        def reset_data(ev):
+            for key in storage.keys():
+                del storage[key]
+            storage['ship'] = doc['ship'].value
+            update(None)
+
+        b_reset = html.BUTTON("Reset Data")
+        b_reset.bind("click", reset_data)
+        doc["reset"] <= b_reset
         create_ship_list()
 
 

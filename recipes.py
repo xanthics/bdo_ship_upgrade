@@ -93,7 +93,7 @@ recipes = {
 		"Hard Pillar": 30,
 		"Ultimate Weapon Reform Stone": 10
 	},
-	"Epheria Gaileass": {
+	"Epheria Galleass": {
 		"Epheria Frigate": 1,
 		"Ship Upgrade Permit: Epheria Galleass": 1,
 		"+10 Epheria: Old Prow": 1,
@@ -109,7 +109,7 @@ recipes = {
 		"Moon Scale Plywood": 10
 	},
 	"Carrack (Volante)": {
-		"Epheria Gaileass": 1,
+		"Epheria Galleass": 1,
 		"+10 Epheria Galleass: Black Dragon Prow": 1,
 		"+10 Epheria Galleass: Upgraded Plating (Blue)": 1,
 		"+10 Epheria Galleass: Mayna Cannon": 1,
@@ -121,7 +121,7 @@ recipes = {
 		"Brilliant Pearl Shard": 30
 	},
 	"Carrack (Valor)": {
-		"Epheria Gaileass": 1,
+		"Epheria Galleass": 1,
 		"+10 Epheria Galleass: Black Dragon Prow": 1,
 		"+10 Epheria Galleass: Upgraded Plating (Blue)": 1,
 		"+10 Epheria Galleass: Mayna Cannon": 1,
