@@ -35,9 +35,8 @@
                 for i in recipes[val]:
                     ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
             if val in barters:
-                for b in barters[val]:
-                    for c, item in enumerate(b["input"]):
-                        ret.append("{} per {}".format(b['count'], item) + BR())
+                for c, item in enumerate(barters[val]["input"]):
+                    ret.append("{} per {}".format(barters[val]['count'], item) + BR())
             return ret
 
 
