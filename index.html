@@ -24,6 +24,7 @@
         from tradein import barters
         from vendor_items import items
         from ships import ships
+        from information import gen_info
 
         # Given a part name, returns a string with information about that part
         # returns empty string if no information
@@ -87,6 +88,7 @@
         # Code to show an about page and miscellaneous information.
         def show_info():
             doc['shipparts'].text = ''
+            doc['shipparts'] <= gen_info()
             return
 
 
@@ -102,7 +104,7 @@
             recipesextra = {}
             for part in recipes[eventname].keys():
                 id = "{}-{}".format(eventname, part)
-                if '+' in part and part in recipes and (id not in storage or storage[id] == '0'):
+                if '+' in part and part[4:] in recipes and (id not in storage or storage[id] == '0'):
                     for i in recipes[part[4:]]:
                         if "+" in i:
                             recipesextra[i] = 1
