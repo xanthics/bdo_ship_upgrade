@@ -14,7 +14,7 @@ barters = {
 	"Cox Pirates' Artifact (Parley Expert)": [{"count": 1, "input": ["[Level 4] Amethyst Fragment", "[Level 4] Headless Dragon Figurine"]}],
 	"Fiery Black Stone": [{"count": 1, "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Stalactie Fragment", "[Level 3] Skull Decoration Teacup", "[Level 4] Boatman's Manual", "[Level 4] Old Chest With Gold Coins"]}],
 	"Frosted Black Stone": [{"count": 1, "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Round Knife", "[Level 4] Seashell Deco"]}],
-	"Verdant Black Stones": [{"count": 1, "input": ["any level 1 barter good.  Take coupon to Ravinia"]}],
+	"Verdant Black Stone": [{"count": 1, "input": ["any level 1 barter good.  Take coupon to Ravinia"]}],
 	"Brilliant Rock Salt": [{"count": 1, "input": ["[Level 5] Portrait of the Ancient", "[Level 5] Luxury Patterned Fabric", "[Level 5] 102 Year Old Golden Herb", "[Level 5] Taxidermied White Caterpillar"]}],
 	"Brilliant Pearl Shard": [{"count": 1, "input": ["[Level 5] Elixir of Youth", "[Level 5] Mysterious Rock", "[Level 5] Golden Fish Scale", "[Level 5] Faded Gold Dragon Figurine"]}],
 }

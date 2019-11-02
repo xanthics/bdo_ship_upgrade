@@ -10,6 +10,7 @@
 </head>
 <body onload="brython(1)">
     <section class="main">
+        This site uses local storage to save your choices. <br /><br />
         <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
     </section>
@@ -32,7 +33,7 @@
                     ret.append(i + BR())
             if val in recipes:
                 for i in recipes[val]:
-                    ret.append("Recipe item: {}x {}".format(recipes[val][i], i) + BR())
+                    ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
             if val in barters:
                 for b in barters[val]:
                     for c, item in enumerate(b["input"]):
