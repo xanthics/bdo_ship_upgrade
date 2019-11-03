@@ -10,7 +10,7 @@
 </head>
 <body onload="brython(1)">
     <section class="main">
-        <p>This site uses local storage to save your choices<span style="font-family: monospace;">.</span></p><br />
+        <p>This site uses local storage to save your choices and requires Javascript to function properly<span style="font-family: monospace;">.</span></p><br />
         <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
@@ -195,13 +195,28 @@
                 ids.append(newid)
                 sel = html.SELECT(size=1, multiple=False, id=newid)
                 val = 10 if '+' in part else recipes[eventname][part]
+                name = part[4:] if '+' in part else part
                 sel['data-max'] = val
                 sel['data-name'] = part
                 sel['class'] = "current"
                 sel.bind("change", update_count)
                 for i in range(val+1):
                     sel <= html.OPTION(i)
-                t <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(part[4:]) if '+' in part else part))
+
+                titletext = []
+                if name in items:
+                    titletext.extend(items[name])
+                if name in barters:
+                    titletext.append("{} per barter".format(barters[name]['count']))
+                    titletext.extend(barters[name]['input'])
+                if name in recipes:
+                    titletext.append("**RECIPE**")
+                    titletext.extend(["{}: {}".format(recipes[name][x], x) for x in recipes[name]])
+
+                if titletext:
+                    t <= TR(TD(sel) + TD(val) + TD(SPAN("{} (select level)".format(name) if '+' in part else part, title="\n".join(titletext))))
+                else:
+                    t <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(name) if '+' in part else part))
 
             doc['shipparts'].text = ''
             doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.")) + t
