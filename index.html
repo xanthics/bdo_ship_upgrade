@@ -230,6 +230,8 @@
             doc['ship'].value = storage['ship']
             update(None)
 
+        if 'ship' not in storage:
+            storage['ship'] = "Information"
         b_reset = html.BUTTON("Reset Data")
         b_reset.bind("click", reset_data)
         doc["reset"] <= b_reset
