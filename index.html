@@ -10,7 +10,7 @@
 </head>
 <body onload="brython(1)">
     <section class="main">
-        This site uses local storage to save your choices. <br /><br /><br />
+        <p>This site uses local storage to save your choices.</p><br />
         <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
@@ -18,7 +18,7 @@
     <script type="text/python">
         from browser import document as doc
         from browser import html
-        from browser.html import TABLE, TR, TH, TD, BR, H3, SPAN
+        from browser.html import TABLE, TR, TH, TD, BR, H3, SPAN, B, P
         from browser.local_storage import storage
         from recipes import recipes
         from tradein import barters
@@ -201,7 +201,7 @@
                 t <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(part[4:]) if '+' in part else part))
 
             doc['shipparts'].text = ''
-            doc['shipparts'] <= t
+            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.")) + t
             doc['shipparts'] <= BR() + BR() + H3("Missing parts") + SPAN(id="missing")
 
             # iterate over selection boxes and set to values in local storage.
