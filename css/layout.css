@@ -41,12 +41,22 @@ tr:nth-child(odd) {
 	margin: 1px
 	line-height: 1em;}
 
-label + input[type=checkbox] {
-	opacity:0.5;}
-
-label + input[type=checkbox]:checked {
-	opacity:1.0;}
-
 select.current {
     width: 4em;
+}
+
+.trade1 {
+    color: rgb(100, 100, 100);
+}
+.trade2 {
+    color: rgb(0, 100, 0);
+}
+.trade3 {
+    color: rgb(0, 0, 100);
+}
+.trade4 {
+    color: rgb(100, 100, 0);
+}
+.trade5 {
+    color: rgb(100, 65, 0);
 }

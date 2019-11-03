@@ -38,7 +38,7 @@
                     ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
             if val in barters:
                 for c, item in enumerate(barters[val]["input"]):
-                    ret.append("{} per {}".format(barters[val]['count'], item) + BR())
+                    ret.append("{} per ".format(barters[val]['count']) + SPAN(item, Class="trade{}".format(item[item.find(']') - 1])) + BR())
             return ret
 
 
@@ -97,48 +97,49 @@
             font = 18
             canvas = doc["shipchart"]
             voffset = canvas.height/font+10
-            hoffset = [
+            hval = [
                 0,
                 10*len("Bartali Sailboat"),
                 10*max(len("Epheria Sailboat"), len("Epheria Frigate")),
                 10*max(len("Improved Sailboat"), len("Improved Frigate")),
                 10*max(len("Epheria Caravel"), len("Epheria Galleass")),
+                10*len("Epheria Carrack")
             ]
-
-            for idx in range(len(hoffset)-1, 0, -1):
-                hoffset[idx] += sum(hoffset[:idx])
+            hoffset = []
+            for idx in range(1,len(hval)+1):
+                hoffset.append(sum(hval[:idx]))
             center = canvas.height/2
             ctx = canvas.getContext("2d")
             ctx.font = "{}px monospace".format(font)
 
             ctx.fillStyle = "#FFFFFF"
-            draw_line(ctx, hoffset[0], center, hoffset[1], center - 3*voffset)  # Bartali -> Sailboat
-            draw_line(ctx, hoffset[1], center - 3*voffset, hoffset[2], center - 2*voffset)
-            draw_line(ctx, hoffset[1], center - 3*voffset, hoffset[3], center - 3*voffset)
-            draw_line(ctx, hoffset[2], center - 2*voffset, hoffset[3], center - 3*voffset)
-            draw_line(ctx, hoffset[3], center - 3*voffset, hoffset[4], center - 4*voffset)
-            draw_line(ctx, hoffset[3], center - 3*voffset, hoffset[4], center - 2*voffset)
+            draw_line(ctx, hoffset[0] + hval[1]/2, center            , hoffset[1] + hval[2]/2, center - 3*voffset)  # Bartali -> Sailboat
+            draw_line(ctx, hoffset[1] + hval[2]/2, center - 3*voffset, hoffset[2] + hval[3]/2, center - 1*voffset)  # sailboat -> improved
+            draw_line(ctx, hoffset[1] + hval[2]/2, center - 3*voffset, hoffset[3] + hval[4]/2, center - 3*voffset)  # sailboat -> caravel
+            draw_line(ctx, hoffset[2] + hval[3]/2, center - 1*voffset, hoffset[3] + hval[4]/2, center - 3*voffset)  # improved -> caravel
+            draw_line(ctx, hoffset[3] + hval[4]/2, center - 3*voffset, hoffset[4] + hval[5]/2, center - 5*voffset)  # caravel -> carrack (advance)
+            draw_line(ctx, hoffset[3] + hval[4]/2, center - 3*voffset, hoffset[4] + hval[5]/2, center - 1*voffset)  # caravel -> carrack (balance)
 
-            draw_line(ctx, hoffset[0], center, hoffset[1], center + 3*voffset)  # Bartali -> Frigate
-            draw_line(ctx, hoffset[1], center + 3*voffset, hoffset[2], center + 2*voffset)
-            draw_line(ctx, hoffset[1], center + 3*voffset, hoffset[3], center + 3*voffset)
-            draw_line(ctx, hoffset[2], center + 2*voffset, hoffset[3], center + 3*voffset)
-            draw_line(ctx, hoffset[3], center + 3*voffset, hoffset[4], center + 2*voffset)
-            draw_line(ctx, hoffset[3], center + 3*voffset, hoffset[4], center + 4*voffset)
+            draw_line(ctx, hoffset[0] + hval[1]/2, center            , hoffset[1] + hval[2]/2, center + 3*voffset)  # Bartali -> Frigate
+            draw_line(ctx, hoffset[1] + hval[2]/2, center + 3*voffset, hoffset[2] + hval[3]/2, center + 1*voffset)  # frigate -> improved
+            draw_line(ctx, hoffset[1] + hval[2]/2, center + 3*voffset, hoffset[3] + hval[4]/2, center + 3*voffset)  # frigate -> galleass
+            draw_line(ctx, hoffset[2] + hval[3]/2, center + 1*voffset, hoffset[3] + hval[4]/2, center + 3*voffset)  # improved -> galleass
+            draw_line(ctx, hoffset[3] + hval[4]/2, center + 3*voffset, hoffset[4] + hval[5]/2, center + 1*voffset)  # galleass -> carrack (valor)
+            draw_line(ctx, hoffset[3] + hval[4]/2, center + 3*voffset, hoffset[4] + hval[5]/2, center + 5*voffset)  # galleass -> carrack (volante)
 
             ctx.fillRect(0, center-font, 10*len("Bartali Sailboat"), font*1.5)
             
             ctx.fillRect(hoffset[1], center-font - 3*voffset, 10*len("Epheria Sailboat"), font*1.5)
-            ctx.fillRect(hoffset[2], center-font - 2*voffset, 10*len("Improved Sailboat"), font*1.5)
+            ctx.fillRect(hoffset[2], center-font - 1*voffset, 10*len("Improved Sailboat"), font*1.5)
             ctx.fillRect(hoffset[3], center-font - 3*voffset, 10*len("Epheria Caravel"), font*1.5)
-            ctx.fillRect(hoffset[4], center-font - 4*voffset, 10*len("Epheria Carrack"), font*2.5)
-            ctx.fillRect(hoffset[4], center-font - 2*voffset, 10*len("Epheria Carrack"), font*2.5)
+            ctx.fillRect(hoffset[4], center-font - 5*voffset, 10*len("Epheria Carrack"), font*2.5)
+            ctx.fillRect(hoffset[4], center-font - 1*voffset, 10*len("Epheria Carrack"), font*2.5)
 
             ctx.fillRect(hoffset[1], center-font + 3*voffset, 10*len("Epheria Frigate"), font*1.5)
-            ctx.fillRect(hoffset[2], center-font + 2*voffset, 10*len("Improved Frigate"), font*1.5)
+            ctx.fillRect(hoffset[2], center-font + 1*voffset, 10*len("Improved Frigate"), font*1.5)
             ctx.fillRect(hoffset[3], center-font + 3*voffset, 10*len("Epheria Galleass"), font*1.5)
-            ctx.fillRect(hoffset[4], center-font + 2*voffset, 10*len("Epheria Carrack"), font*2.5)
-            ctx.fillRect(hoffset[4], center-font + 4*voffset, 10*len("Epheria Carrack"), font*2.5)
+            ctx.fillRect(hoffset[4], center-font + 1*voffset, 10*len("Epheria Carrack"), font*2.5)
+            ctx.fillRect(hoffset[4], center-font + 5*voffset, 10*len("Epheria Carrack"), font*2.5)
 
             ctx.fillStyle = "#000000"
             ctx.textAlign = "left"
@@ -147,20 +148,20 @@
             ctx.fillText("Epheria Sailboat", hoffset[1], center - 3*voffset)
             ctx.fillText("Epheria Frigate", hoffset[1], center + 3*voffset)
 
-            ctx.fillText("Improved Sailboat", hoffset[2], center - 2*voffset)
-            ctx.fillText("Improved Frigate", hoffset[2], center + 2*voffset)
+            ctx.fillText("Improved Sailboat", hoffset[2], center - 1*voffset)
+            ctx.fillText("Improved Frigate", hoffset[2], center + 1*voffset)
 
             ctx.fillText("Epheria Caravel", hoffset[3], center - 3*voffset)
             ctx.fillText("Epheria Galleass", hoffset[3], center + 3*voffset)
 
-            ctx.fillText("Epheria Carrack", hoffset[4], center - 4*voffset)
-            ctx.fillText("(Advance)", hoffset[4], center - 4*voffset+font+2)
-            ctx.fillText("Epheria Carrack", hoffset[4], center - 2*voffset)
-            ctx.fillText("(Balance)", hoffset[4], center - 2*voffset+font+2)
-            ctx.fillText("Epheria Carrack", hoffset[4], center + 4*voffset)
-            ctx.fillText("(Volante)", hoffset[4], center + 4*voffset+font+2)
-            ctx.fillText("Epheria Carrack", hoffset[4], center + 2*voffset)
-            ctx.fillText("(Valor)", hoffset[4], center + 2*voffset+font+2)
+            ctx.fillText("Epheria Carrack", hoffset[4], center - 5*voffset)
+            ctx.fillText("(Advance)", hoffset[4], center - 5*voffset+font+2)
+            ctx.fillText("Epheria Carrack", hoffset[4], center - 1*voffset)
+            ctx.fillText("(Balance)", hoffset[4], center - 1*voffset+font+2)
+            ctx.fillText("Epheria Carrack", hoffset[4], center + 5*voffset)
+            ctx.fillText("(Volante)", hoffset[4], center + 5*voffset+font+2)
+            ctx.fillText("Epheria Carrack", hoffset[4], center + 1*voffset)
+            ctx.fillText("(Valor)", hoffset[4], center + 1*voffset+font+2)
 
             return
 
