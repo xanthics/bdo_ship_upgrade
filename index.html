@@ -66,8 +66,9 @@
                                     if i not in missing:
                                         missing[i] = 0
                                     missing[i] += n_count
-                                queue.append((i, n_count))
-                            if any(["+{} ".format(int(doc[item['id']].value)) in x or x.startswith("Epheria") for x in recipes[current]]):
+                                if "+10" not in i:
+                                    queue.append((i, n_count))
+                            if any(["+{} ".format(int(doc[item['id']].value)) in x  for x in recipes[current]]):
                                 queue = []
 
             t = TABLE(TR(TH("Count")+TH("Name")+TH("Notes")))
