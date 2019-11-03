@@ -153,5 +153,5 @@ def gen_info():
 				tr <= TD(shipstats[ship][key])
 			t <= tr
 
-		ret += t
+		ret += t + BR()
 	return ret
