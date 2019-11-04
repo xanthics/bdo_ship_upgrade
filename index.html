@@ -162,10 +162,14 @@
                 rec += H4("{} {}".format(recipe_extra[item], item)) + tn
 
             doc['shipparts'].text = ''
-            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.")) + t
+            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe."))
+            doc['shipparts'] <= t
             if rec:
                 doc['shipparts'] <= H3("Recipe Subparts") + rec
-            doc['shipparts'] <= BR() + BR() + H3("Missing parts (Automatically generated)") + SPAN(id="missing")
+            doc['shipparts'] <= H3("Missing parts (Automatically generated)")
+            if "Carrack" in eventname:
+                doc['shipparts'] <= P("Fiery and Frosted Black Stone upgrades can fail.  The number shown is the minimum.")
+            doc['shipparts'] <= SPAN(id="missing")
 
             # iterate over selection boxes and set to values in local storage.
             for id in ids:
