@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>BDO Ship Upgrade Recipe Tracker</title>
-    <script src="https://cdn.rawgit.com/brython-dev/brython/3.6.2/www/src/brython.js" type="text/javascript"></script>
-    <script src="https://cdn.rawgit.com/brython-dev/brython/3.6.2/www/src/brython_stdlib.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.8.0/brython.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.8.0/brython_stdlib.js"></script>
     <link href="css/layout.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body onload="brython(1)">
+<body onload=brython({"debug":1})>
     <section class="main">
         <p>This site uses local storage to save your choices and requires Javascript to function properly<span style="font-family: monospace;">.</span></p><br />
         <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
@@ -17,8 +17,8 @@
     </section>
     <script type="text/python">
         from browser import document as doc
-        from browser import html
-        from browser.html import TABLE, TR, TH, TD, BR, H3, SPAN, B, P
+        from browser import html, bind
+        from browser.html import TABLE, TR, TH, TD, BR, H3, H4, SPAN, B, P, SELECT, OPTION, INPUT
         from browser.local_storage import storage
         from recipes import recipes
         from tradein import barters
@@ -49,7 +49,9 @@
                 count = int(item['data-max']) - int(doc[item['id']].value)
                 if count:
                     if "+" not in item['data-name']:
-                        missing[item['data-name']] = count
+                        if item['data-name'] not in missing:
+                            missing[item['data-name']] = 0
+                        missing[item['data-name']] += count
                     else:
                         count = 1
                     if item['data-name'] in ships:
@@ -68,11 +70,10 @@
                                     missing[i] += n_count
                                 if "+10" not in i:
                                     queue.append((i, n_count))
-                            if any(["+{} ".format(int(doc[item['id']].value)) in x  for x in recipes[current]]):
+                            if any(["+{} ".format(int(doc[item['id']].value)) in x or x.startswith("Epheria") for x in recipes[current]]):
                                 queue = []
 
             t = TABLE(TR(TH("Count")+TH("Name")+TH("Notes")))
-
             for item in sorted(missing):
                 t <= TR(TD(missing[item])+TD(item)+TD(notes(item)))
 
@@ -84,6 +85,116 @@
         def update_count(ev):
             storage[ev.currentTarget['id']] = ev.currentTarget.value
             update(None)
+
+
+        # Change what is displayed to match current selection
+        def update(ev):
+            if ev:
+                storage['ship'] = ev.currentTarget.value
+            eventname = storage['ship']
+            if eventname == "Information":
+                show_info()
+                return
+
+            t = TABLE()
+            t <= TR(TH("Count") + TH("Max") + TH("Name"))
+            ids = []
+            recipe_extra = {}
+            optiontemplate = "<option>{0}</option>"
+            for part in recipes[eventname]:
+                newid = "{}-{}".format(eventname, part)
+                ids.append(newid)
+                val = 10 if '+' in part else recipes[eventname][part]
+                name = part[4:] if '+' in part else part
+                options = [optiontemplate.format(x) for x in range(val+1)]
+                sel = SELECT(''.join(options), size=1, multiple=False, id=newid, Class="current")
+                sel['data-name'] = part
+                sel['data-max'] = val
+                sel.bind("change", update_count)
+
+                titletext = []
+                if name in items:
+                    titletext.extend(items[name])
+                if name in barters:
+                    titletext.append("{} per barter".format(barters[name]['count']))
+                    titletext.extend(barters[name]['input'])
+                if name in recipes:
+                    if name not in ships and "Epheria" in name and (newid not in storage or storage[newid] == "0"):
+                        recipe_extra[name] = 1
+                    titletext.append("**RECIPE**")
+                    titletext.extend(["{}: {}".format(recipes[name][x], x) for x in recipes[name]])
+
+                if titletext:
+                    t <= TR(TD(sel) + TD(val) + TD(SPAN("{} (select level)".format(name) if '+' in part else part, title="\n".join(titletext))))
+                else:
+                    t <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(name) if '+' in part else part))
+
+            rec = ''
+
+            for item in recipe_extra:
+                tn = TABLE(TR(TH("Count")+TH("Max")+TH("Name")))
+                for piece in recipes[item]:
+                    newid = "{}-{}-{}".format(eventname, item, piece)
+                    ids.append(newid)
+                    val = (10 if '+' in piece else recipes[item][piece]) * recipe_extra[item]
+                    name = piece[4:] if '+' in piece else piece
+                    options = [optiontemplate.format(x) for x in range(val+1)]
+                    sel = SELECT(''.join(options), size=1, multiple=False, id=newid, Class="current")
+                    sel['data-name'] = piece
+                    sel['data-max'] = val
+                    sel.bind("change", update_count)
+
+                    titletext = []
+                    if name in items:
+                        titletext.extend(items[name])
+                    if name in barters:
+                        titletext.append("{} per barter".format(barters[name]['count']))
+                        titletext.extend(barters[name]['input'])
+                    if name in recipes:
+                        titletext.append("**RECIPE**")
+                        titletext.extend(["{}: {}".format(recipes[name][x], x) for x in recipes[name]])
+
+                    if titletext:
+                        tn <= TR(TD(sel) + TD(val) + TD(SPAN("{} (select level)".format(name) if '+' in piece else piece, title="\n".join(titletext))))
+                    else:
+                        tn <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(name) if '+' in piece else piece))
+
+                rec += H4("{} {}".format(recipe_extra[item], item)) + tn
+
+            doc['shipparts'].text = ''
+            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.")) + t
+            if rec:
+                doc['shipparts'] <= H3("Recipe Subparts") + rec
+            doc['shipparts'] <= BR() + BR() + H3("Missing parts (Automatically generated)") + SPAN(id="missing")
+
+            # iterate over selection boxes and set to values in local storage.
+            for id in ids:
+                if id in storage:
+                    doc[id].value = storage[id]
+                else:
+                    doc[id].value = 0
+            update_missing()
+
+
+        # Initialize our list of ships and select the previous one if a choice exists
+        def create_ship_list():
+            sel = html.SELECT(size=1, multiple=False, id="ship", step="1")
+            for ship in ships:
+                sel <= html.OPTION(ship)
+            sel.bind("change", update)
+            doc['shiplist'] <= sel
+            if 'ship' in storage and storage['ship'] in ships:
+                doc['ship'].value = storage['ship']
+            update(None)
+
+
+        def reset_data(ev):
+            for key in storage.keys():
+                del storage[key]
+            storage['ship'] = ships[0]
+            doc['ship'].value = storage['ship']
+            update(None)
+
 
 
         # Code to show an about page and miscellaneous information.
@@ -131,7 +242,7 @@
             draw_line(ctx, hoffset[3] + hval[4]/2, center + 3*voffset, hoffset[4] + hval[5]/2, center + 5*voffset)  # galleass -> carrack (volante)
 
             ctx.fillRect(0, center-font, ctx.measureText("Bartali Sailboat").width, font*1.5)
-            
+
             ctx.fillRect(hoffset[1], center-font - 3*voffset, ctx.measureText("Epheria Sailboat").width, font*1.5)
             ctx.fillRect(hoffset[2], center-font - 1*voffset, ctx.measureText("Improved Sailboat").width, font*1.5)
             ctx.fillRect(hoffset[3], center-font - 3*voffset, ctx.measureText("Epheria Caravel").width, font*1.5)
@@ -166,87 +277,6 @@
             ctx.fillText("Epheria Carrack", hoffset[4], center + 1*voffset)
             ctx.fillText("(Valor)", hoffset[4], center + 1*voffset+font+2)
 
-            return
-
-
-        # Change what is displayed to match current selection
-        def update(ev):
-            if ev:
-                storage['ship'] = ev.currentTarget.value
-            eventname = storage['ship']
-            if eventname == "Information":
-                show_info()
-                return
-            # add green gear items for carracks
-            recipesextra = {}
-            for part in recipes[eventname].keys():
-                id = "{}-{}".format(eventname, part)
-                if '+' in part and part[4:] in recipes and (id not in storage or storage[id] == '0'):
-                    for i in recipes[part[4:]]:
-                        if "+" in i:
-                            recipesextra[i] = 1
-                            break
-
-            t = TABLE()
-            t <= TR(TH("Count") + TH("Max") + TH("Name"))
-            ids = []
-            for part in {**recipes[eventname], **recipesextra}:
-                newid = "{}-{}".format(eventname, part)
-                ids.append(newid)
-                sel = html.SELECT(size=1, multiple=False, id=newid)
-                val = 10 if '+' in part else recipes[eventname][part]
-                name = part[4:] if '+' in part else part
-                sel['data-max'] = val
-                sel['data-name'] = part
-                sel['class'] = "current"
-                sel.bind("change", update_count)
-                for i in range(val+1):
-                    sel <= html.OPTION(i)
-
-                titletext = []
-                if name in items:
-                    titletext.extend(items[name])
-                if name in barters:
-                    titletext.append("{} per barter".format(barters[name]['count']))
-                    titletext.extend(barters[name]['input'])
-                if name in recipes:
-                    titletext.append("**RECIPE**")
-                    titletext.extend(["{}: {}".format(recipes[name][x], x) for x in recipes[name]])
-
-                if titletext:
-                    t <= TR(TD(sel) + TD(val) + TD(SPAN("{} (select level)".format(name) if '+' in part else part, title="\n".join(titletext))))
-                else:
-                    t <= TR(TD(sel) + TD(val) + TD("{} (select level)".format(name) if '+' in part else part))
-
-            doc['shipparts'].text = ''
-            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.")) + t
-            doc['shipparts'] <= BR() + BR() + H3("Missing parts") + SPAN(id="missing")
-
-            # iterate over selection boxes and set to values in local storage.
-            for id in ids:
-                if id in storage:
-                    doc[id].value = storage[id]
-            update_missing()
-
-
-        # Initialize our list of ships and select the previous one if a choice exists
-        def create_ship_list():
-            sel = html.SELECT(size=1, multiple=False, id="ship")
-            for ship in ships:
-                sel <= html.OPTION(ship)
-            sel.bind("change", update)
-            doc['shiplist'] <= sel
-            if 'ship' in storage and storage['ship'] in ships:
-                doc['ship'].value = storage['ship']
-            update(None)
-
-
-        def reset_data(ev):
-            for key in storage.keys():
-                del storage[key]
-            storage['ship'] = ships[0]
-            doc['ship'].value = storage['ship']
-            update(None)
 
         if 'ship' not in storage or storage['ship'] not in ships:
             storage['ship'] = "Information"
