@@ -87,7 +87,7 @@ items = {
 	"Frosted Black Stone": ["20 Sea Coins"],
 	"Tide-Dyed Standardized Timber Square": ["350 Sea Coins", "3x per [Daily] Our Guild is not a Charity Group", "Cox Pirates' Shadow Ghost drop"],
 	"Deep Tide-Dyed Standardized Timber Square": ["1,000 Sea Coins", "3x per [Daily] Win-win Situation", "Cox Pirates' Shadow Ghost rare drop"],
-	"Moon Vein Flax Fabric": ["600 Sea Coins", "3x per [Daily] OMG's Ninshark Hunter", "10x from drying Khan's Tendon"],
+	"Moon Vein Flax Fabric": ["600 Sea Coins", "3x per [Daily] OMG's Nineshark Hunter", "10x from drying Khan's Tendon"],
 	"Moon Scale Plywood": ["160 Sea Coins", "10x per [Daily] OMG's Candidum Hunter", "10x from drying Khan's Scale"],
 	"Fiery Black Stone": ["10 Sea Coins"],
 	"Mandragora Essence": ["100 Sea Coins"],
