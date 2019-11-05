@@ -162,7 +162,7 @@
                 rec += H4("{} {}".format(recipe_extra[item], item)) + tn
 
             doc['shipparts'].text = ''
-            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe."))
+            doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.") + BR() + "You will need to recover durability with Memory Fragments or the base item." + BR() +"This additional cost is not reflected in the Missing Parts list.")
             doc['shipparts'] <= t
             if rec:
                 doc['shipparts'] <= H3("Recipe Subparts") + rec
