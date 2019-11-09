@@ -23,6 +23,7 @@
         from recipes import recipes
         from tradein import barters
         from vendor_items import items
+        from sea_coins import coins
         from ships import ships
         from information import gen_info
 
@@ -30,6 +31,8 @@
         # returns empty string if no information
         def notes(val):
             ret = []
+            if val in coins:
+                ret.append("{} Sea Coins".format(coins[val]) + BR())
             if val in items:
                 for i in items[val]:
                     ret.append(i + BR())
@@ -74,11 +77,20 @@
                                 queue = []
 
             t = TABLE(TR(TH("Count")+TH("Name")+TH("Notes")))
+            tcoins = TABLE(TR(TH("Name") + TH("Total (Sea Coins)")))
+            total = 0
             for item in sorted(missing):
                 t <= TR(TD(missing[item])+TD(item)+TD(notes(item)))
+                if item in coins:
+                    cost = coins[item] * missing[item]
+                    total += cost
+                    tcoins <= TR(TD(item) + TD("{:,}".format(cost)))
 
             doc['missing'].text = ''
-            doc['missing'] <= t
+            if total:
+                tcoins <= TR(TD(B("Total"))+TD("{:,}".format(total)))
+                doc['missing'] <= H4("Coin tracker") + tcoins
+            doc['missing'] <= H4("Item tracker") + t
 
 
         # Update the stored value of an item
@@ -113,6 +125,8 @@
                 sel.bind("change", update_count)
 
                 titletext = []
+                if name in coins:
+                    titletext.append("{} Sea Coins".format(coins[name]))
                 if name in items:
                     titletext.extend(items[name])
                 if name in barters:
@@ -145,6 +159,8 @@
                     sel.bind("change", update_count)
 
                     titletext = []
+                    if name in coins:
+                        titletext.append("{} Sea Coins".format(coins[name]))
                     if name in items:
                         titletext.extend(items[name])
                     if name in barters:
