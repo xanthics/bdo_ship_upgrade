@@ -11,6 +11,7 @@
 <body onload=brython({"debug":1})>
     <section class="main">
         <p>This site uses local storage to save your choices and requires Javascript to function properly<span style="font-family: monospace;">.</span></p><br />
+        <p>Site was refactored to use setter/getter for localstorage.<br />Unfortunately this means that previous values are lost.</p><br />
         <b>Select a ship: </b></strong><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
@@ -26,6 +27,31 @@
         from sea_coins import coins
         from ships import ships
         from information import gen_info
+
+        storage_key = "bdo_ship_upgrade"
+
+        # Setter storage so that we can differentiate values on this site from others at the same domain
+        def set_storage(key, val):
+            storage["{}-{}".format(storage_key, key)] = val
+
+        # Getting for storage so that we can differentiate values on this site from others at the same domain
+        def get_storage(key):
+            return storage["{}-{}".format(storage_key, key)]
+
+        # Check if a value exists in storage
+        def check_storage(key):
+            return "{}-{}".format(storage_key, key) in storage
+
+        # Reset that only deletes values for this site
+        def reset_data(ev):
+            for key in storage.keys():
+                if key.startswith(storage_key):
+                    del storage[key]
+
+            set_storage('ship', "Information")
+            doc['ship'].value = get_storage('ship')
+            update(None)
+
 
         # Given a part name, returns a string with information about that part
         # returns empty string if no information
@@ -95,15 +121,15 @@
 
         # Update the stored value of an item
         def update_count(ev):
-            storage[ev.currentTarget['id']] = ev.currentTarget.value
+            set_storage(ev.currentTarget['id'], ev.currentTarget.value)
             update(None)
 
 
         # Change what is displayed to match current selection
         def update(ev):
             if ev:
-                storage['ship'] = ev.currentTarget.value
-            eventname = storage['ship']
+                set_storage('ship', ev.currentTarget.value)
+            eventname = get_storage('ship')
             if eventname == "Information":
                 show_info()
                 return
@@ -133,7 +159,7 @@
                     titletext.append("{} per barter".format(barters[name]['count']))
                     titletext.extend(barters[name]['input'])
                 if name in recipes:
-                    if name not in ships and "Epheria" in name and (newid not in storage or storage[newid] == "0"):
+                    if name not in ships and "Epheria" in name and ((not check_storage(newid)) or get_storage(newid) == "0"):
                         recipe_extra[name] = 1
                     titletext.append("**RECIPE**")
                     titletext.extend(["{}: {}".format(recipes[name][x], x) for x in recipes[name]])
@@ -189,8 +215,8 @@
 
             # iterate over selection boxes and set to values in local storage.
             for id in ids:
-                if id in storage:
-                    doc[id].value = storage[id]
+                if check_storage(id):
+                    doc[id].value = get_storage(id)
                 else:
                     doc[id].value = 0
             update_missing()
@@ -203,17 +229,11 @@
                 sel <= html.OPTION(ship)
             sel.bind("change", update)
             doc['shiplist'] <= sel
-            if 'ship' in storage and storage['ship'] in ships:
-                doc['ship'].value = storage['ship']
+            if check_storage('ship') and get_storage('ship') in ships:
+                doc['ship'].value = get_storage('ship')
             update(None)
 
 
-        def reset_data(ev):
-            for key in storage.keys():
-                del storage[key]
-            storage['ship'] = ships[0]
-            doc['ship'].value = storage['ship']
-            update(None)
 
 
 
@@ -298,8 +318,8 @@
             ctx.fillText("(Valor)", hoffset[4], center + 1*voffset+font+2)
 
 
-        if 'ship' not in storage or storage['ship'] not in ships:
-            storage['ship'] = "Information"
+        if (not check_storage('ship')) or get_storage('ship') not in ships:
+            set_storage('ship', "Information")
         b_reset = html.BUTTON("Reset Data")
         b_reset.bind("click", reset_data)
         doc["reset"] <= b_reset
