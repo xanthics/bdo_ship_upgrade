@@ -66,8 +66,9 @@
                 for i in recipes[val]:
                     ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
             if val in barters:
-                for c, item in enumerate(barters[val]["input"]):
-                    ret.append("{} per ".format(barters[val]['count']) + SPAN(item, Class="trade{}".format(item[item.find(']') - 1])) + BR())
+                for entry in barters[val]:
+                    for item in entry["input"]:
+                        ret.append("{} per ".format(entry['count']) + SPAN(item, Class="trade{}".format(item[item.find(']') - 1])) + BR())
             return ret
 
 
@@ -156,8 +157,9 @@
                 if name in items:
                     titletext.extend(items[name])
                 if name in barters:
-                    titletext.append("{} per barter".format(barters[name]['count']))
-                    titletext.extend(barters[name]['input'])
+                    for barter in barters[name]:
+                        for b in barter["input"]:
+                            titletext.append("{} per {}".format(barter['count'], b))
                 if name in recipes:
                     if name not in ships and "Epheria" in name and ((not check_storage(newid)) or get_storage(newid) == "0"):
                         recipe_extra[name] = 1
@@ -190,8 +192,9 @@
                     if name in items:
                         titletext.extend(items[name])
                     if name in barters:
-                        titletext.append("{} per barter".format(barters[name]['count']))
-                        titletext.extend(barters[name]['input'])
+                        for barter in barters[name]:
+                            for b in barter["input"]:
+                                titletext.append("{} per {}".format(barter['count'], b))
                     if name in recipes:
                         titletext.append("**RECIPE**")
                         titletext.extend(["{}: {}".format(recipes[name][x], x) for x in recipes[name]])
@@ -205,6 +208,7 @@
 
             doc['shipparts'].text = ''
             doc['shipparts'] <= P(B("Ship parts need to be 100% durability for upgrade recipe.") + BR() + "You will need to recover durability with Memory Fragments or the base item." + BR() +"This additional cost is not reflected in the Missing Parts list.")
+            doc['shipparts'] <= P("Barters for [Level #] items are unlocked based on the total number of barters you have done,<br /> They can randomly appear during any reset once unlocked.")
             doc['shipparts'] <= t
             if rec:
                 doc['shipparts'] <= H3("Recipe Subparts") + rec
