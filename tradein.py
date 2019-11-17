@@ -14,7 +14,7 @@ barters = {
 	"Brilliant Pearl Shard": [{"count": 1, "input": ["[Level 5] Elixir of Youth", "[Level 5] Mysterious Rock", "[Level 5] Golden Fish Scale", "[Level 5] Faded Gold Dragon Figurine"]}],
 	"Island Tree Coated Plywood": [{"count": 100, "input": ["[Level 2] Filtered Drinking Water", "[Level 2] Narvo Sea Cucumber", "[Level 2] Pirate Gold Coin"]}],
 	"Rock Salt Ingot": [{"count": 100, "input": ["[Level 2] Conch Shell Ornament", "[Level 2] Balanced Stone Pagoda", "[Level 2] Urchin Spine"]}],
-	"Fiery Black Stone": [{"count": "1-3", "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Stalactie Fragment", "[Level 3] Skull Decoration Teacup", "[Level 4] Boatman's Manual", "[Level 4] Old Chest With Gold Coins"]}],
-	"Frosted Black Stone": [{"count": "1-3", "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Round Knife", "[Level 4] Seashell Deco"]}],
+	"Fiery Black Stone": [{"count": "1-4", "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Stalactie Fragment", "[Level 3] Skull Decoration Teacup", "[Level 4] Boatman's Manual", "[Level 4] Old Chest With Gold Coins"]}],
+	"Frosted Black Stone": [{"count": "1-4", "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Round Knife", "[Level 4] Seashell Deco"]}],
 	"Verdant Black Stone": [{"count": 1, "input": ["any level 1 barter good.  Exchange coupon with Ravinia"]}],
 }
