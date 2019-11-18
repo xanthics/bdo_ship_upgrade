@@ -71,7 +71,7 @@ items = {
 	"Bright Reef Piece": ["8x per [Daily] Ravikel's Test"],
 #	"Great Ocean Dark Iron": [],
 	"Cobalt Ingot": ["Rare sea monster drop"],
-#	"Brilliant Rock Salt Ingot": [],
+	"Brilliant Rock Salt Ingot": ["Black Rust Sea Monster"],
 	"Seaweed Stalk": ["4x per [Daily] Precious Coral Piece", "Suspicious Cargo Ship"],
 	"Enhanced Island Tree Coated Plywood": ["10x per [Daily] For the Serendian Soldiers"],
 	"Pure Pearl Crystal": ["2x per [Daily] Ravikel's Test"],
