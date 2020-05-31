@@ -10,9 +10,9 @@
 </head>
 <body onload=brython({"debug":1})>
     <section class="main">
-        <p>This site uses local storage to save your choices and requires Javascript to function properly<span style="font-family: monospace;">.</span></p><br />
-        <p>Site was refactored to use setter/getter for localstorage.<br />Unfortunately this means that previous values are lost.</p><br />
-        <b>Select a ship: </b><span id="shiplist"></span><br /><br />
+        <p>This site uses local storage to save your choices and requires Javascript to function properly<span style="font-family: monospace;">.</span></p>
+        <p>Added "Ship material Barter" from 27th May 2020 patch.  # quantities will be updated when I find a list.  If a tradein already exists it is assumed values are unchanged.</p>
+        <br /><b>Select a ship: </b><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
         <div id="patreon" style="display: flex; justify-content: flex-end"><a href="https://www.patreon.com/bePatron?u=33775051" data-patreon-widget-type="become-patron-button">Become a Patron!</a></div><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
@@ -24,6 +24,7 @@
         from browser.local_storage import storage
         from recipes import recipes
         from tradein import barters
+        from shipbarter import shipbarters
         from vendor_items import items
         from sea_coins import coins
         from ships import ships
@@ -66,8 +67,15 @@
             if val in recipes and val not in ships:
                 for i in recipes[val]:
                     ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
+            seen = []
             if val in barters:
+                ret.append(B("Trade Item Barter") + BR())
                 for entry in barters[val]:
+                    for item in entry["input"]:
+                        ret.append("{} per ".format(entry['count']) + SPAN(item, Class="trade{}".format(item[item.find(']') - 1])) + BR())
+            if val in shipbarters:
+                ret.append(B("Ship Material Barter") + BR())
+                for entry in shipbarters[val]:
                     for item in entry["input"]:
                         ret.append("{} per ".format(entry['count']) + SPAN(item, Class="trade{}".format(item[item.find(']') - 1])) + BR())
             return ret
