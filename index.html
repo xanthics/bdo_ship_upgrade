@@ -15,7 +15,7 @@
         <br /><b>Select a ship: </b><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
-        <div id="patreon" style="display: flex; justify-content: flex-end"><a href="https://www.patreon.com/bePatron?u=33775051" data-patreon-widget-type="become-patron-button">Become a Patron!</a></div><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+        <div id="patreon"><a href="https://www.patreon.com/xanthics"><img alt="Become a Patron!" src="img/become_a_patron_button@2x.png" id="patreon_image"></a></div>
     </section>
     <script type="text/python">
         from browser import document as doc
@@ -29,6 +29,7 @@
         from sea_coins import coins
         from ships import ships
         from information import gen_info
+        from totals import tccost
 
         storage_key = "bdo_ship_upgrade"
 
@@ -67,7 +68,6 @@
             if val in recipes and val not in ships:
                 for i in recipes[val]:
                     ret.append("Recipe: {}x {}".format(recipes[val][i], i) + BR())
-            seen = []
             if val in barters:
                 ret.append(B("Trade Item Barter") + BR())
                 for entry in barters[val]:
@@ -114,17 +114,17 @@
 
             t = TABLE(TR(TH("Count")+TH("Name")+TH("Notes")))
             tcoins = TABLE(TR(TH("Name") + TH("Total (Sea Coins)")))
-            total = 0
+            total_remain = 0
             for item in sorted(missing):
                 t <= TR(TD(missing[item])+TD(item)+TD(notes(item)))
                 if item in coins:
                     cost = coins[item] * missing[item]
-                    total += cost
+                    total_remain += cost
                     tcoins <= TR(TD(item) + TD("{:,}".format(cost)))
 
             doc['missing'].text = ''
-            if total:
-                tcoins <= TR(TD(B("Total"))+TD("{:,}".format(total)))
+            if total_remain:
+                tcoins <= TR(TD(B("Total Remaining  ({:.2%}) done".format((tccost[get_storage('ship')] - total_remain) / tccost[get_storage('ship')])))+TD("{:,}".format(total_remain)))
                 doc['missing'] <= H4("Coin tracker") + tcoins
             doc['missing'] <= H4("Item tracker") + t
 
