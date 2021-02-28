@@ -15,6 +15,12 @@
         <br /><b>Select a ship: </b><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
+        <br/><br/>
+			<p>
+				<a href="https://github.com/xanthics/bdo_ship_upgrade/discussions" target="_blank">Suggestions</a>
+				<br/>
+				<a href="https://github.com/xanthics/bdo_ship_upgrade/issues" target="_blank">Bugs</a>
+			</p>
         <div id="patreon"><a href="https://www.patreon.com/xanthics"><img alt="Become a Patron!" src="img/become_a_patron_button@2x.png" id="patreon_image"></a></div>
     </section>
     <script type="text/python">
@@ -277,9 +283,9 @@
                 hoffset.append(sum(hval[:idx]))
             center = canvas.height/2
             # draw background
-            ctx.fillStyle = "#c8c8c8"
+            ctx.fillStyle = "rgb(100,100,100)"
             ctx.fillRect(0, 0, canvas.width, canvas.height)
-            ctx.fillStyle = "#FFFFFF"
+            ctx.fillStyle = "rgb(40,40,40)"
             draw_line(ctx, hoffset[0] + hval[1]/2, center            , hoffset[1] + hval[2]/2, center - 3*voffset)  # Bartali -> Sailboat
             draw_line(ctx, hoffset[1] + hval[2]/2, center - 3*voffset, hoffset[2] + hval[3]/2, center - 1*voffset)  # sailboat -> improved
             draw_line(ctx, hoffset[1] + hval[2]/2, center - 3*voffset, hoffset[3] + hval[4]/2, center - 3*voffset)  # sailboat -> caravel
@@ -308,7 +314,7 @@
             ctx.fillRect(hoffset[4], center-font + 1*voffset, ctx.measureText("Epheria Carrack").width, font*2.5)
             ctx.fillRect(hoffset[4], center-font + 5*voffset, ctx.measureText("Epheria Carrack").width, font*2.5)
 
-            ctx.fillStyle = "#000000"
+            ctx.fillStyle = "rgb(200,200,200)"
             ctx.textAlign = "left"
             ctx.fillText("Bartali Sailboat", 0, center)
 

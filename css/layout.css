@@ -2,11 +2,14 @@ body {
 	background-color: rgb(100,100,100);
 	background-image: url('../img/sbg.gif');
 	background-attachment: fixed;
-	font-family: Arial, Helvetica, sans-serif;}
+	font-family: Arial, Helvetica, sans-serif;
+	text-rendering: optimizeLegibility;
+}
 
 section {
 	text-align: justify;
-	background-color: rgb(200,200,200);
+	color: rgb(200, 200, 200);
+	background-color: rgba(40,40,40, .8);
 	padding:10px;
 	margin-left: auto;
 	margin-right: auto;
@@ -14,60 +17,101 @@ section {
 	border-radius: 3px;
 	border-style:solid;
 	border-width:1px;
-	border-color: rgb(75,75,75);}
+	border-color: rgb(75,75,75);
+}
 
 section.main {
 	z-index: 1;
 	max-width: 850px;
 	min-width: 850px;
 	width: 95%;
-	position: relative;}
+	position: relative;
+}
 
 /* Alternating list background Styles */
+tr {
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding:6px;
+	margin: 1px
+	line-height: 1em;
+}
 
 tr:nth-child(even) {
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: rgb(185,185,185);
-	padding:6px;
-	margin: 1px
-	line-height: 1em;}
+	background-color: rgb(35,35,35);
+}
 
 tr:nth-child(odd) {
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: rgb(220,220,220);
-	padding:6px;
-	margin: 1px
-	line-height: 1em;}
+	background-color: rgb(45,45,45);
+}
+
+select {
+    text-align: right;
+    border: 1px solid rgb(0,0,0);
+    color: rgb(200, 200, 200);
+    background: rgba(0, 0, 0, .1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: .25em .5em;
+}
 
 select.current {
     width: 4em;
 }
 
+option {
+    background-color: rgb(20, 20, 20);
+}
+
 .trade1 {
-    color: rgb(100, 100, 100);
+    color: rgb(200, 200, 200);
 }
 .trade2 {
-    color: rgb(0, 100, 0);
+    color: rgb(50, 200, 50);
 }
 .trade3 {
-    color: rgb(0, 0, 100);
+    color: rgb(75, 75, 200);
 }
 .trade4 {
-    color: rgb(100, 100, 0);
+    color: rgb(200, 200, 50);
 }
 .trade5 {
-    color: rgb(100, 65, 0);
+    color: rgb(200, 150, 50);
 }
 
 #patreon {
     display: flex;
     justify-content: flex-end;
     margin-left: auto;
-    width: 10em;}
+    width: 10em;
+}
 
 #patreon_image {
     height: 100%;
     width: 100%;
-    object-fit: contain;}
+    object-fit: contain;
+}
+
+button {
+    padding: .25em .5em;
+    white-space: nowrap;
+    width: fit-content;
+    border: 1px solid rgb(0,0,0);
+    background: rgba(0, 0, 0, .5);
+    color: rgb(200,200,200);
+}
+
+button:hover {
+    background: rgb(100,100,100);
+    color: rgb(255, 255, 255);
+}
+
+   /* link legibility tweak */
+a:link {
+    color: rgb(98, 110, 250);
+}
+
+a:visited {
+    color: rgb(137, 117, 162);
+}
