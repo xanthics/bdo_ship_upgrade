@@ -80,17 +80,25 @@ option {
     color: rgb(200, 150, 50);
 }
 
-#patreon {
+#sponsor {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-left: auto;
-    width: 10em;
+    gap: 5px;
+    width: 225px;
+}
+
+.sponsor_img {
+    height: auto;
+    width: 100%
+}
+
+#github_image{
+    flex:3.1;
 }
 
 #patreon_image {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
+    flex:4.255;
 }
 
 button {
