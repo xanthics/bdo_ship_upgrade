@@ -69,14 +69,15 @@ recipes = {
 	},
 	"Epheria Frigate": {
 		"Bartali Sailboat": 1,
+		"Ship Upgrade Permit: Epheria Frigate": 1,
 		"+10 Bartali Sailboat: Old Prow": 1,
 		"+10 Bartali Sailboat: Old Plating": 1,
 		"+10 Bartali Sailboat: Old Cannon": 1,
 		"+10 Bartali Sailboat: Old Sail": 1,
 		"Standardized Timber Square": 1000,
-		"Jade Coral Ingot": 600,
-		"Pine Coated Plywood": 1500,
-		"Enhanced Flax Fabric": 300,
+		"Jade Coral Ingot": 800,
+		"Pine Coated Plywood": 1000,
+		"Enhanced Flax Fabric": 450,
 		"Hard Pillar": 100
 
 	},
