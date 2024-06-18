@@ -9,7 +9,7 @@ tccost = {
 	"Carrack (Balance)": 263050,
 	"Epheria Frigate": 0,
 	"Improved Epheria Frigate": 0,
-	"Epheria Galleass": 1100,
+	"Epheria Galleass": 800,
 	"Carrack (Volante)": 291050,
 	"Carrack (Valor)": 292150
 }
