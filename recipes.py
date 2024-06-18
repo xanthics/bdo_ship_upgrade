@@ -105,7 +105,7 @@ recipes = {
 		"Timber for Upgrade": 100,
 		"Adhesive for Upgrade": 100,
 		"Island Tree Coated Plywood": 100,
-		"Tide-Dyed Standardized Timber Square": 6,
+		"Tide-Dyed Standardized Timber Square": 3,
 		"Cobalt Ingot": 2,
 		"Moon Scale Plywood": 10
 	},
