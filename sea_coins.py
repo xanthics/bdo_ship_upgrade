@@ -17,11 +17,10 @@ coins = {
 	"Tear of the Ocean": 500,
 	"Khan's Tendon": 500,
 	"Khan's Scale": 200,
-	"Frosted Black Stone": 20,
+	"Tidal Black Stone": 10,
 	"Tide-Dyed Standardized Timber Square": 100,
 	"Deep Tide-Dyed Standardized Timber Square": 100,
 	"Moon Vein Flax Fabric": 50,
 	"Moon Scale Plywood": 20,
-	"Fiery Black Stone": 10,
 	"Mandragora Essence": 100,
 }

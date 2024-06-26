@@ -11,6 +11,7 @@
 <body onload=brython({"debug":1})>
     <section class="main">
         <p>This site uses local storage to save your choices and requires Javascript to function properly<span style="font-family: monospace;">.</span></p>
+        <p>Updated to reflect <a href="https://www.naeu.playblackdesert.com/en-US/News/Detail?groupContentNo=7050&countryType=en-US" target="_blank">Patch Notes - May 29, 2024</a>.  Please create a github issue if there are any mistakes.</p>
         <p>Added "Ship material Barter" from 27th May 2020 patch.  # quantities will be updated when I find a list.  If a tradein already exists it is assumed values are unchanged.</p>
         <br /><b>Select a ship: </b><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
@@ -231,7 +232,7 @@
                 doc['shipparts'] <= H3("Recipe Subparts") + rec
             doc['shipparts'] <= H3("Missing parts (Automatically generated)")
             if "Carrack" in eventname:
-                doc['shipparts'] <= P("Fiery and Frosted Black Stone upgrades can fail.  The number shown is the minimum.")
+                doc['shipparts'] <= P("Tidal Black Stone upgrades can fail.  The number shown is the minimum.")
             doc['shipparts'] <= SPAN(id="missing")
 
             # iterate over selection boxes and set to values in local storage.

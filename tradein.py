@@ -14,7 +14,5 @@ barters = {
 	"Luminous Cobalt Ingot": [{"count": "1", "input": ["[Level 4] Stolen Pirate Dagger", "[Level 4] Solidified Lava", "[Level 4] Pirate's Key"]}],
 	"Pure Pearl Crystal": [{"count": "1", "input": ["[Level 3] Torn Pirate Treasure Map", "[Level 3] Scout Binoculars", "[Level 3] Skull Symbol Carpet", "[Level 3] Ancient Orders"]}],
 	"Rock Salt Ingot": [{"count": "100", "input": ["[Level 2] Conch Shell Ornament", "[Level 2] Balanced Stone Pagoda", "[Level 2] Urchin Spine"]}],
-	"Fiery Black Stone": [{"count": "1-4", "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Stalactie Fragment", "[Level 3] Skull Decoration Teacup", "[Level 4] Boatman's Manual", "[Level 4] Old Chest With Gold Coins"]}],
-	"Frosted Black Stone": [{"count": "1-4", "input": ["[Level 2] Cron Castle Gold Coin", "[Level 3] Round Knife", "[Level 4] Seashell Deco"]}],
-	"Verdant Black Stone": [{"count": "1", "input": ["any level 1 barter good.  Exchange coupon with Ravinia"]}],
+	"Tidal Black Stone": [{"count": "2", "input": ["any level 2 barter good."]},{"count": "4", "input": ["any level 3 barter good."]}],
 }
