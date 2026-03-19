@@ -17,6 +17,8 @@
         <br /><b>Select a ship: </b><span id="shiplist"></span><br /><br />
         <span id="shipparts"></span>
         <br /><span id="reset"></span>(warning not reversible)
+        <br /><span id="import"></span><input type="text" id="dataimport" onclick="this.select();">(warning: overwrites existing data)
+        <br /><span id="export"></span><input type="text" id="dataexport" onclick="this.select();">
         <br/><br/>
             <p>
                 <a href="https://github.com/xanthics/bdo_ship_upgrade/discussions" target="_blank">Suggestions</a>
@@ -40,7 +42,8 @@
         from ships import ships
         from information import gen_info
         from totals import tccost
-
+        import base64
+ 
         storage_key = "bdo_ship_upgrade"
 
         # Setter storage so that we can differentiate values on this site from others at the same domain
@@ -65,7 +68,25 @@
             doc['ship'].value = get_storage('ship')
             update(None)
 
+        def import_data(ev):
+            reset_data(ev)
+            data_byte = doc['dataimport'].value.encode("ascii")
+            for data in base64.b64decode(data_byte).decode("ascii").split('|'):
+                vals = data.split('~')
+                set_storage(vals[0], vals[1])
+            doc['ship'].value = get_storage('ship')
+            update(None)
 
+        def export_data(ev):
+            data = []
+            skip = len(storage_key) + 1
+            for key in storage:
+                if key.startswith(storage_key):
+                    data.append(f"{key[skip:]}~{storage[key]}")
+            data_str = '|'.join(data)
+            data_byte = base64.b64encode(data_str.encode("ascii"))
+            doc['dataexport'].value = f"{data_byte.decode('ascii')}"
+ 
         # Given a part name, returns a string with information about that part
         # returns empty string if no information
         def notes(val):
@@ -376,6 +397,15 @@
         b_reset = html.BUTTON("Reset Data")
         b_reset.bind("click", reset_data)
         doc["reset"] <= b_reset
+        
+        b_import = html.BUTTON("Import Data")
+        b_import.bind("click", import_data)
+        doc["import"] <= b_import
+        
+        b_export = html.BUTTON("Export Data")
+        b_export.bind("click", export_data)
+        doc["export"] <= b_export
+        
         create_ship_list()
 
 
